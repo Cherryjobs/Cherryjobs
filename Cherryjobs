@@ -1,5 +1,233 @@
-Cherryjobs
-==========
+/*****************************************************************
+# File Name: 
+# Author: tangjin
+# Date
+# Copyright:China 2014/2024 
+# Description: 
+# Function list: 
+************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#define MAX 50
 
-Public
-hello
+
+
+
+struct member
+{
+    char ID[MAX];
+    char name[MAX];
+    char phone[MAX];
+    char address[MAX];
+
+    struct member *next;
+};
+typedef struct member Member;
+typedef Member * Mem;
+
+int insert_head_node(Mem *head,Mem *newnode)
+{
+    (*newnode)->next = (*head)->next;
+    (*head)->next = *newnode;
+}
+
+int  my_ADD(Mem *head)
+{
+    printf("\033[2J");
+    printf("\033[0;0H");
+
+    char str[MAX];
+    strcpy(str,"y");
+    while(strcmp(str,"y") == 0)
+    {   
+        Mem newnode = NULL;
+        newnode = (Mem)malloc(sizeof(Member));
+
+        printf(" ID:");
+        getchar();
+        gets(newnode->ID);
+        printf("name :");
+        gets(newnode->name);
+        printf("phone:");
+        gets(newnode->phone);
+        printf("address:");
+        gets(newnode->address);
+        printf("\n");
+
+        insert_head_node(head,&newnode);
+        printf("add more? y/n\n");
+        scanf("%s",str);
+        printf("\n");
+    }
+    return 1;
+
+    
+}
+
+void my_DISPLAY(Mem *head)
+{
+    printf("\033[2J");
+    printf("\033[0;0H");
+    Mem temp = (*head)->next;
+
+    while(temp != NULL)
+    {
+        printf("%s\n",temp->ID);
+	printf("%s\n",temp->name);
+	printf("%s\n",temp->phone);
+	printf("%s\n",temp->address);
+
+        printf("\n");
+	temp = temp->next;
+    }
+    getchar();
+    getchar();
+}
+
+void my_SEARCH(Mem *head)
+{
+    printf("\033[2J");
+    printf("\033[0;0H");
+    
+    char str[MAX];
+    printf("please the ID:");
+    scanf("%s",str);
+
+    Mem temp = (*head)->next;
+
+    while(temp != NULL)
+    {
+       if(strcmp(temp->name,str) == 0)
+       {
+        printf("%s\n",temp->ID);
+	printf("%s\n",temp->name);
+	printf("%s\n",temp->phone);
+	printf("%s\n",temp->address);
+           
+       }
+       temp = temp->next;
+    }
+    getchar();
+    getchar();
+}
+
+/*char *delete(Mem *head)
+{
+    printf("\033[2J");
+    printf("\033[0;0H");
+
+    Mem temp = (*head)->next;
+    static char ptr[MAX];
+    printf("please insert ID:");
+    scanf("%s",ptr);
+
+    while(temp != NULL)
+    {
+        if(strcmp(temp->ID,ptr) == 0);
+	{
+	    printf("%s\n",temp->ID);
+	    printf("%s\n",temp->name);
+	    printf("%s\n",temp->phone);
+	    printf("%s\n",temp->address);
+	    printf("\n");
+	}
+	temp = temp->next;
+    }
+    return ptr;
+}
+*/
+int my_DELETE(Mem *head)
+{
+
+    Mem ptr = *head;
+    Mem temp = ptr->next;
+    
+    printf("please insert the ID:");
+    char demo[MAX];
+    scanf("%s",demo);
+
+    while(temp != NULL)
+    {
+        if(strcmp(temp->ID,demo) == 0)
+	{
+	    ptr->next = temp->next;
+	    free(temp);
+	    temp = NULL;
+	    printf("deleted\n");
+	    
+	    getchar();
+	    getchar();
+
+	    return 1;
+	}
+	ptr = temp;
+	temp = temp->next;
+    }
+}
+
+
+void desk(Mem *head)
+{
+    printf("\033[2J");
+    printf("\033[0;0H");
+
+    printf("\t\t+++++++++++++++++++++++++++++++++++++++++++\n");
+    printf("\t\t+             高端大气通讯录              +\n");
+    printf("\t\t+                                         +\n");
+    printf("\t\t+              1.记录成员                 +\n");
+    printf("\t\t+              2.查询成员                 +\n");
+    printf("\t\t+              3.删除成员                 +\n");
+    printf("\t\t+              4.显示列表                 +\n");
+    printf("\t\t+                 退出                    +\n");
+    printf("\t\t+                                         +\n");
+    printf("\t\t+++++++++++++++++++++++++++++++++++++++++++\n");
+
+    printf("please insert your choice:\n");
+    printf("ADD/SEARCH/DELETE/LIST/EXIT:");
+
+    char str[MAX];
+    scanf("%s",str);
+
+    if(strcmp(str,"ADD") == 0 || strcmp(str,"add") == 0)
+    {
+        my_ADD(head);
+    }
+    else if(strcmp(str,"search") == 0 || strcmp(str,"SEARCH") == 0)
+    {
+        my_SEARCH(head);
+    }
+    else if(strcmp(str,"list") == 0 || strcmp(str,"LIST") == 0)
+    {
+        my_DISPLAY(head);
+    }
+
+    else if(strcmp(str,"delete") == 0 || strcmp(str,"DELETE") == 0)
+    {
+        my_DELETE(head);
+    }
+    else if(strcmp(str,"QUIT") == 0 || strcmp(str,"quit") == 0)
+    {
+        exit(1);
+    }
+
+}
+
+void create(Mem *head)
+{
+    *head = (Mem)malloc(sizeof(Member));
+    (*head)->next = NULL;
+}
+
+int main()
+{  
+    Mem head;
+    create(&head);
+    while(1)
+    {
+        desk(&head);
+    }
+    return 0;
+}
+
+
