@@ -1,0 +1,27 @@
+#include<stdio.h>
+int main()
+{
+    int result;             //定义整形变量      
+    char str[100];          //定义字符串
+
+    printf("please input string!");
+    scanf("%s",str);        //输入字符串
+    
+    result = str2int(str);  //调用函数
+    printf("%d\n",result);  
+    return 0;               //返回值为0
+}
+/*将字符串变为整形数函数*/
+int str2int(char str[])     //定义函数
+{
+
+    int result = 0;
+    
+    while(*str != '\0')
+    {
+        result = result * 10 + *str-'0';
+        str++;               //上一行将字符化为整形
+    }
+    return result;
+}
+
