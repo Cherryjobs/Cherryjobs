@@ -1,0 +1,90 @@
+/************************************************************
+  Copyright (C), 1988-1999, China Tech. Co., Ltd.
+  FileName: continue_max.c
+  Author:  tangjin  Version : 1.0  Date:2014/10/14     
+  Version:   1.0
+  Function List:   
+             1. my_strcpy(char *str,char *point,int len)
+             2. c_max(char *str,char *output)
+  History:   无   
+  <author>       <time>       <version >   
+  tangjin       2014/10/14       1.0   
+ ***********************************************************/
+
+#include<stdio.h>
+
+/*************************************************
+  Function:       my_strcpy
+  Description:    实现字符串复制
+  Calls:          无
+  Called By:      main,c_max
+  Input:          char *point,char *str,int len
+  Output:         point
+  Return:         0
+  Others:         无
+ *************************************************/
+
+int my_strcpy(char *point,char *str,int len)
+
+{ 
+    while(len > 0)            
+    {
+        *point = *str;             //数组元素传递
+	point++;
+	str++;
+	len--;
+    }
+    *point = '\0';                 //字符串结束
+    return 0;
+}
+
+/*************************************************
+  Function:       c_max
+  Description:    找出最长数字串
+  Calls:          my_strcpy
+  Called By:      main
+  Input:          char *str,char *output
+  Output:         max
+  Return:         max
+  Others:         无
+ *************************************************/
+int c_max(char *str,char *output)
+{
+    int count = 0;                 //计数变量
+    int max = 0;                   //最大值变量
+    
+    while(*str != 0)
+     {
+         while(*str >= '0' && *str <= '9')
+ 	 {                         //判断数字                           
+	     str++;                
+             count++;
+	 } 
+         
+	 if(count > max)            
+
+         {
+	     max = count;           //eg: a[i] = b[j]
+	     my_strcpy(output,str-max,count);
+         } 
+         count = 0;             
+         str++;
+     }
+     return max;
+}
+
+
+int main()
+{
+    char str[100];                   //输入字符串
+    char ptr[100];                   //输出字符串
+
+    printf("please input string!");  
+    scanf("%s",str);
+
+    int len = c_max(str,ptr);        //数字段长度
+
+    printf("%d\n",len);              
+    printf("%s\n",ptr);              
+    return 0;
+}
