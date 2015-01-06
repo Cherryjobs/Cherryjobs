@@ -1,0 +1,98 @@
+#include <stdio.h>
+
+int my_strlen(char *src)
+{
+    int len = 0;
+
+    while(*src != '\0')
+    {
+        len++;
+	src++;
+    }
+
+    return len;
+}
+
+int my_strcmp(char *dest, char *src)
+{
+     if(my_strlen(dest) < my_strlen(src))
+     {
+         return 1;
+     }
+
+     int i;
+     int len = my_strlen(src);
+     for(i = 0; i < len; i++)
+     {
+         if(*(dest + i) != *(src + i))
+	 {
+             return 1;
+	 }
+     }
+     return 0;
+}
+
+char * find_string(char *src, char *head, char *tail)
+{
+    if(my_strlen(src) < my_strlen(head) || my_strlen(src) < my_strlen(tail))
+    {
+        return NULL;
+    }
+    
+    char *temp;
+
+    while(*src != '\0')
+    {
+        
+	if(my_strcmp(src,head) == 0)
+	{
+	    temp = src;
+	    src = src + my_strlen(head);
+	    break;
+	}
+
+	src++;
+    }
+    
+    while(*src != '\0')
+    {
+        
+	if(my_strcmp(src,tail) == 0)
+	{
+	    *(src + my_strlen(tail)) = '\0';
+	    return temp;
+	}
+
+	src++;
+   }
+
+   return NULL;
+}
+
+int main()
+{
+    char src[100];
+    char head[100];
+    char tail[100];
+
+
+    printf("Please input source string:\n");
+    scanf("%s",src);
+    printf("Please input head string:\n");
+    scanf("%s",head);
+    printf("Please input tail string:\n");
+    scanf("%s",tail);
+
+    char *aim_string = find_string(src,head,tail);
+
+    if(aim_string == NULL)
+    {
+        printf("no find string!\n");
+	exit(1);
+    }
+   
+    printf("the aim string:%s\n",aim_string);
+
+    return 0;
+}
+
