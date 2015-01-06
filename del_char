@@ -1,0 +1,21 @@
+#include <stdio.h>
+
+int main()
+{
+    int i;
+    int count[26] = {0};
+    char *src = "linglingaccbd";
+  
+    while(*src != '\0')
+    {
+        count[*src - 'a']++;
+	src++;
+    }
+
+    for(i = 0; i < 26; i++)
+    {
+        printf("count[%c] = %d\n",'a' + i,count[i]);
+    }
+
+    return 0;
+}
